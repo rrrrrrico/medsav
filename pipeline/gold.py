@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import json
+from datetime import datetime
+
 from pathlib import Path
 from typing import Optional
 
@@ -67,4 +70,60 @@ def run(export_dir: Optional[Path] = None) -> None:
         .join(catalog, "certification_no")
         .orderBy(F.desc("prem_date"), F.desc("avg_change_pct")))
     _save(changes, "premium_changes", export_dir)
+    if export_dir is not None:
+        _export_summary(prem, catalog, loadings, export_dir)
     print(f"[gold] tables written; {changes.count()} plan price changes on record")
+
+
+def _export_summary(prem, catalog, loadings, export_dir: Path) -> None:
+    """Compact JSON behind the site's Insights page (HKD plans; USD plans are counted only)."""
+    hkd = (prem.where("currency = 'HKD'")
+           .withColumn("plan_kind", F.when(F.col("certification_no").startswith("S"), "standard")
+                       .otherwise("flexi")))
+
+    curve = (hkd.where(F.col("status").isin("SMN", "SFN"))
+        .groupBy("plan_kind", "status", "age")
+        .agg(F.percentile_approx("annual_premium", [0.25, 0.5, 0.75]).alias("q"),
+             F.countDistinct("certification_no").alias("plans"))
+        .select("plan_kind", "status", "age", F.col("q")[0].alias("p25"), F.col("q")[1].alias("median"),
+                F.col("q")[2].alias("p75"), "plans")
+        .orderBy("plan_kind", "status", "age"))
+
+    lifetime = (hkd.where("status = 'SMN' AND age BETWEEN 40 AND 99")
+        .groupBy("certification_no", "plan_kind")
+        .agg(F.sum("annual_premium").alias("total"), F.count("*").alias("years"))
+        .where("years = 60")
+        .join(catalog, "certification_no")
+        .select("certification_no", "plan_kind", "company_name_en", "company_name_zh",
+                "plan_name_en", "plan_name_zh", "type_en", F.round("total").alias("total"))
+        .orderBy("total"))
+
+    by_age = Window.partitionBy("certification_no").orderBy("age")
+    growth = (hkd.where("status = 'SMN'")
+        .withColumn("prev", F.lag("annual_premium").over(by_age))
+        .where("prev > 0 AND age <= 99")
+        .groupBy("age")
+        .agg(F.round(F.percentile_approx(F.col("annual_premium") / F.col("prev") - 1, 0.5) * 100, 2)
+             .alias("median_increase_pct"))
+        .orderBy("age"))
+
+    sources = {r.source: r["count"] for r in prem.groupBy("source").count().collect()}
+    plans_by_currency = {r.currency: r["plans"] for r in
+                         prem.groupBy("currency").agg(F.countDistinct("certification_no").alias("plans")).collect()}
+
+    def rows(df):
+        return [r.asDict() for r in df.collect()]
+
+    summary = {
+        "generated_at": datetime.now().isoformat(timespec="seconds"),
+        "plans_by_currency": plans_by_currency,
+        "insurers": loadings.count(),
+        "rows": sum(sources.values()),
+        "cells_by_source": sources,
+        "prem_dates": sorted(r.prem_date for r in prem.select("prem_date").distinct().collect()),
+        "curve": rows(curve),
+        "lifetime_40_99_male_non_smoker": rows(lifetime),
+        "median_yearly_increase_by_age": rows(growth),
+        "insurers_pricing": rows(loadings),
+    }
+    (export_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False), encoding="utf-8")

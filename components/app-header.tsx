@@ -58,6 +58,9 @@ export function AppHeader({ language, setLanguage }: AppHeaderProps) {
           <Link href="/" className={linkClass("/")}>
             {language === "en" ? "Calculator" : "計算機"}
           </Link>
+          <Link href="/insights" className={linkClass("/insights")}>
+            {language === "en" ? "Insights" : "數據分析"}
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
