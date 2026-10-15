@@ -13,12 +13,24 @@
 /.next/
 /out/
 
+# PWA generated
+/public/sw.js
+/public/sw.js.map
+/public/workbox-*.js
+/public/workbox-*.js.map
+/public/swe-worker-*.js
+/public/swe-worker-*.js.map
+
 # production
 /build
 
 # misc
 .DS_Store
 *.pem
+
+# local tooling / PDF cache
+/.venv/
+/.cache/
 
 # debug
 npm-debug.log*
@@ -34,3 +46,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# data pipeline (PySpark)
+/.venv-spark/
+/.lakehouse/
+spark-warehouse/
+metastore_db/
+derby.log

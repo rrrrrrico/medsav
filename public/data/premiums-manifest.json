@@ -1,0 +1,15 @@
+{
+  "plan_count": 579,
+  "catalog_count": 579,
+  "row_count": 458810,
+  "premium_source": "https://www.vhis.gov.hk/public/data/plan-premium.zip",
+  "built_by": "pipeline (PySpark + Delta Lake)",
+  "stats": {
+    "written": 579,
+    "pdf_extended": 567,
+    "pdf_failed_validate": 0,
+    "pdf_missing": 0,
+    "no_gov": 0,
+    "max_age_gt_80": 578
+  }
+}

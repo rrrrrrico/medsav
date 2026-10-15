@@ -1,0 +1,69 @@
+{
+  "run_at": "2026-10-15T13:01:02",
+  "passed": true,
+  "rows": 458810,
+  "plans": 579,
+  "pdf_extended": 567,
+  "checks": [
+    {
+      "check": "valid values (premium > 0, age 0-130, known status, currency)",
+      "passed": true,
+      "detail": {
+        "bad_rows": 0
+      }
+    },
+    {
+      "check": "one premium per plan, status and age",
+      "passed": true,
+      "detail": {
+        "duplicate_keys": 0
+      }
+    },
+    {
+      "check": "every gov premium kept unchanged (PDF only adds older ages)",
+      "passed": true,
+      "detail": {
+        "gov_cells_missing_or_changed": 0
+      }
+    },
+    {
+      "check": "every plan with gov data is in the output",
+      "passed": true,
+      "detail": {
+        "gov_plans": 579,
+        "output_plans": 579
+      }
+    },
+    {
+      "check": "no PDF parse errors",
+      "passed": true,
+      "detail": {
+        "errors": 0
+      }
+    },
+    {
+      "check": "plan count did not drop more than 5%",
+      "passed": true,
+      "detail": {
+        "previous": 579,
+        "now": 579
+      }
+    },
+    {
+      "check": "row count did not drop more than 5%",
+      "passed": true,
+      "detail": {
+        "previous": 458810,
+        "now": 458810
+      }
+    },
+    {
+      "check": "PDF-extended plans did not drop more than 5%",
+      "passed": true,
+      "detail": {
+        "previous": 567,
+        "now": 567
+      }
+    }
+  ]
+}

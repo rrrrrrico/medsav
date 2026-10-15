@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MedSav — Medical Finance Calculator
 
-## Getting Started
+Frontend-only Next.js PWA of the insurance-toolbox **醫療融資** calculator. No auth. Plan catalog + one premium CSV per certified plan.
 
-First, run the development server:
+## Quick start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). The illustration page is [http://localhost:3000/illustration](http://localhost:3000/illustration).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Illustration page
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`/illustration` reads a savings-plan image with in-browser OCR (Tesseract). Year-1 **累計保證現金儲備 (B)** is the fixed cash available every year to pay VHIS Plan A/B premiums. No external API.
 
-## Learn More
+## Data
 
-To learn more about Next.js, take a look at the following resources:
+| Path | Contents |
+|------|----------|
+| `public/data/plans.csv` | Catalog of certified VHIS plans (live open data) |
+| `public/data/premiums/<certification_no>.csv` | Independent premium file per plan |
+| `public/data/premiums-manifest.json` | Build stats |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Each premium CSV is long-format:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```text
+certification_no,prem_date,currency,age_counting_method,max_age,pdf_extended_cells,age,status,annual_premium
+```
 
-## Deploy on Vercel
+Status codes: `(R|S)` + `(M|F)` + `(Y|N)` → rider/standard, male/female, smoker yes/no.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### How premiums are built
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Gov open data** (`plan-premium.zip`) is the base for each plan’s ages.
+2. Each plan’s **premium table PDF** is parsed; ages the API lacks (often 81+) are appended when the PDF’s annual table validates against the gov boundary age.
+3. Frontend loads the catalog once, then fetches only the selected plan’s CSV.
+
+Refresh / audit:
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install pdfplumber requests
+npm run build-data   # fetch gov JSON + extend from premium PDFs
+npm run audit-data   # compare CSV max ages vs PDF (writes public/data/max-age-audit.json)
+```
+
+## Stack
+
+- Next.js 14 (App Router) + TypeScript + Tailwind
+- PWA via `@ducanh2912/next-pwa`
+- Plotly charts, XLSX export
+- EN / 中文, light / dark theme

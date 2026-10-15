@@ -1,0 +1,5 @@
+.cache
+.lakehouse
+.venv
+.venv-spark
+pipeline/history
