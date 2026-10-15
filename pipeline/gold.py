@@ -72,7 +72,58 @@ def run(export_dir: Optional[Path] = None) -> None:
     _save(changes, "premium_changes", export_dir)
     if export_dir is not None:
         _export_summary(prem, catalog, loadings, export_dir)
+        _export_matrix(prem, spark.read.format("delta").load(str(config.BRONZE_CATALOG)), export_dir)
     print(f"[gold] tables written; {changes.count()} plan price changes on record")
+
+
+MATRIX_MAX_AGE = 99
+STATUSES = ("SMN", "SFN", "SMY", "SFY")
+
+
+def _export_matrix(prem, catalog, export_dir: Path) -> None:
+    """Every plan's premiums for ages 0-99 by status, so the Insights page can filter in the browser.
+
+    A status whose premiums equal an earlier status is stored as that status's name instead of a list.
+    Rider-only plans (R* statuses) are stored under the matching S* keys with kind "r".
+    """
+    cols = [c for c in ("company_name_en", "company_name_zh", "plan_name_en", "plan_name_zh", "type_en", "type_zh")
+            if c in catalog.columns]
+    plans = {r.certification_no: r.asDict() for r in catalog.select("certification_no", *cols).collect()}
+    cells = (prem.where(F.col("age") <= MATRIX_MAX_AGE)
+             .select("certification_no", "currency", "status", "age", "annual_premium").toPandas())
+
+    insurers: list[list[str]] = []
+    insurer_index: dict[str, int] = {}
+    out = []
+    for (cert, currency), group in cells.groupby(["certification_no", "currency"], sort=True):
+        meta = plans.get(cert, {})
+        name_en = meta.get("company_name_en") or ""
+        if name_en not in insurer_index:
+            insurer_index[name_en] = len(insurers)
+            insurers.append([name_en, meta.get("company_name_zh") or name_en])
+        rider = not group["status"].str.startswith("S").any()
+        prices: dict[str, object] = {}
+        for status in STATUSES:
+            s = group[group["status"] == ("R" + status[1:] if rider else status)]
+            if s.empty:
+                continue
+            series = [None] * (MATRIX_MAX_AGE + 1)
+            for age, premium in zip(s["age"], s["annual_premium"]):
+                series[int(age)] = round(float(premium))
+            same = next((k for k, v in prices.items() if v == series), None)
+            prices[status] = same if same else series
+        out.append({
+            "c": cert,
+            "k": "r" if rider else ("s" if cert.startswith("S") else "f"),
+            "cur": currency,
+            "i": insurer_index[name_en],
+            "n": [meta.get("plan_name_en") or cert, meta.get("plan_name_zh") or meta.get("plan_name_en") or cert],
+            "t": [meta.get("type_en") or "", meta.get("type_zh") or meta.get("type_en") or ""],
+            "p": prices,
+        })
+    matrix = {"max_age": MATRIX_MAX_AGE, "insurers": insurers, "plans": out}
+    (export_dir / "matrix.json").write_text(json.dumps(matrix, ensure_ascii=False, separators=(",", ":")),
+                                            encoding="utf-8")
 
 
 def _export_summary(prem, catalog, loadings, export_dir: Path) -> None:
