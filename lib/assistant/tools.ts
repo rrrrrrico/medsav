@@ -1,7 +1,7 @@
 import { tool } from "@langchain/core/tools";
 import { z } from "zod";
 import { comparePlans, findPremiums, lifetimeCost, planDetails, plansCoveringAge } from "./data";
-import { search } from "./search";
+import { retrieve } from "./retrieve";
 
 const gender = z.enum(["male", "female"]);
 const smoker = z.boolean().describe("true for smokers, false for non-smokers");
@@ -69,7 +69,7 @@ export const plansCoveringAgeTool = tool(
 );
 
 export const searchDocumentsTool = tool(
-  async ({ query, lang, k }) => json(search(query, { lang, k }).map((p) => ({
+  async ({ query, lang, k }) => json((await retrieve(query, { lang, k })).passages.map((p) => ({
     id: p.id, title: p.title, source: p.source, lang: p.lang, url: p.url,
     text: p.text.length > 900 ? `${p.text.slice(0, 900)}…` : p.text,
   }))),

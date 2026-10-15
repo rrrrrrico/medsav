@@ -12,7 +12,10 @@
     "audit-data": ".venv/bin/python scripts/audit_max_ages.py",
     "pipeline": ".venv-spark/bin/python -m pipeline.run",
     "eval:assistant": "tsx --env-file=.env.local scripts/eval-assistant.ts",
-    "build-corpus": ".venv-spark/bin/python scripts/build_assistant_corpus.py"
+    "build-corpus": ".venv-spark/bin/python scripts/build_assistant_corpus.py",
+    "embed-corpus": "tsx --env-file=.env.local scripts/embed-corpus.ts",
+    "eval:retrieval": "tsx --env-file=.env.local scripts/eval-retrieval.ts",
+    "export-dify": "tsx scripts/export-dify.ts"
   },
   "dependencies": {
     "@langchain/core": "^1.2.17",

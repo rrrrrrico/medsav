@@ -53,3 +53,5 @@ next-env.d.ts
 spark-warehouse/
 metastore_db/
 derby.log
+
+/eval/.cache

@@ -41,6 +41,7 @@ const nextConfig = {
     },
     outputFileTracingIncludes: {
       "/api/assistant": ["./public/data/insights/matrix.json", "./lib/assistant/corpus.json"],
+      "/api/tools/[name]": ["./public/data/insights/matrix.json", "./lib/assistant/corpus.json"],
     },
   },
 };

@@ -3,6 +3,7 @@
  *
  *   npm run eval:assistant              # default provider
  *   npm run eval:assistant -- qwen      # a specific provider
+ *   npm run eval:assistant -- dify      # the Dify agent app (DIFY_API_KEY)
  */
 import { mkdirSync, writeFileSync } from "fs";
 import path from "path";
@@ -10,7 +11,9 @@ import { CASES, Case } from "@/eval/cases";
 import { ask, AssistantReply } from "@/lib/assistant/graph";
 import { defaultProvider, Provider } from "@/lib/assistant/model";
 import { PROMPT_VERSION } from "@/lib/assistant/prompts";
-import { passage, search } from "@/lib/assistant/search";
+import { retrieve } from "@/lib/assistant/retrieve";
+import { askDify } from "./dify-client";
+import { passage } from "@/lib/assistant/search";
 
 const provider = (process.argv[2] as Provider | undefined) ?? defaultProvider();
 const only = process.argv[3];
@@ -22,7 +25,7 @@ function isRelevant(title: string, source: string, labels: string[]): boolean {
   return labels.some((l) => (/^Q\d+$/.test(l) ? title.startsWith(`${l}.`) : source === l || title.startsWith(l)));
 }
 
-function score(c: Case, r: AssistantReply) {
+async function score(c: Case, r: AssistantReply) {
   const answer = digits(r.answer);
   const tools = r.steps.map((s) => s.tool);
   if (c.kind === "data") {
@@ -37,7 +40,7 @@ function score(c: Case, r: AssistantReply) {
       const p = passage(cit.id);
       return p ? isRelevant(p.title, p.source, c.relevant) : false;
     });
-    const retrieved = search(c.question, { k: 5 }).some((p) => isRelevant(p.title, p.source, c.relevant));
+    const retrieved = (await retrieve(c.question, { k: 5 })).passages.some((p) => isRelevant(p.title, p.source, c.relevant));
     return { pass: phrasesOk && citedRelevant, detail: { phrasesOk, citedRelevant, recall_at_5_raw_question: retrieved } };
   }
   const usedData = tools.some((t) => t !== "search_documents");
@@ -64,11 +67,12 @@ async function main() {
     let reply: AssistantReply | null = null;
     let error: string | undefined;
     try {
-      reply = await ask([{ role: "user", content: c.question }], provider);
+      const history = [{ role: "user" as const, content: c.question }];
+      reply = provider === ("dify" as Provider) ? await askDify(history) : await ask(history, provider);
     } catch (e) {
       error = String(e);
     }
-    const s = reply ? score(c, reply) : { pass: false, detail: { error } };
+    const s = reply ? await score(c, reply) : { pass: false, detail: { error } };
     rows.push({ id: c.id, kind: c.kind, lang: c.lang, question: c.question, ...s,
       tools: reply?.steps.map((x) => x.tool) ?? [], retries: reply?.grounding_retries ?? null,
       ms: reply?.ms ?? null, answer: reply?.answer ?? null });
@@ -80,7 +84,7 @@ async function main() {
   const docs = by("docs");
   const ms = rows.map((r) => r.ms).filter((x): x is number => x != null).sort((a, b) => a - b);
   const summary = {
-    provider, prompt_version: PROMPT_VERSION, run_at: new Date().toISOString(), cases: rows.length,
+    provider, prompt_version: provider === ("dify" as Provider) ? "dify" : PROMPT_VERSION, run_at: new Date().toISOString(), cases: rows.length,
     pass_rate: rate(rows),
     data_accuracy: rate(by("data")),
     docs_answer_and_citation: rate(docs),
@@ -96,7 +100,7 @@ async function main() {
   if (!only) {
     const dir = path.join(process.cwd(), "eval", "results");
     mkdirSync(dir, { recursive: true });
-    writeFileSync(path.join(dir, `${provider}-${PROMPT_VERSION}.json`), JSON.stringify({ summary, rows }, null, 2));
+    writeFileSync(path.join(dir, `${provider}-${summary.prompt_version}.json`), JSON.stringify({ summary, rows }, null, 2));
   }
 }
 

@@ -52,13 +52,22 @@ function index(): Index {
   return cached;
 }
 
-export function search(query: string, opts: { k?: number; lang?: "en" | "zh" | "any" } = {}) {
+export type LangOption = "en" | "zh" | "any";
+
+/** The passage language to search: explicit, none for "any", else the language of the query. */
+export function queryLang(query: string, lang?: LangOption): "en" | "zh" | null {
+  if (lang === "any") return null;
+  return lang ?? (CJK.test(query) ? "zh" : "en");
+}
+
+/** BM25 keyword search. */
+export function keywordSearch(query: string, opts: { k?: number; lang?: LangOption } = {}) {
   const idx = index();
   const n = idx.passages.length;
   const terms = Array.from(new Set(tokenize(query)));
-  const lang = opts.lang && opts.lang !== "any" ? opts.lang : (CJK.test(query) ? "zh" : "en");
+  const lang = queryLang(query, opts.lang);
   const scored = idx.passages.map((p, i) => {
-    if (opts.lang !== "any" && p.lang !== lang) return { p, score: 0 };
+    if (lang && p.lang !== lang) return { p, score: 0 };
     const tf = idx.docTerms[i];
     let score = 0;
     for (const t of terms) {
@@ -71,10 +80,14 @@ export function search(query: string, opts: { k?: number; lang?: "en" | "zh" | "
     if (p.source === "FAQ" || p.source === "常見問題") score *= 1.15;
     return { p, score };
   });
-  return scored.filter((s) => s.score > 0).sort((a, b) => b.score - a.score).slice(0, Math.min(opts.k ?? 5, 8))
+  return scored.filter((s) => s.score > 0).sort((a, b) => b.score - a.score).slice(0, opts.k ?? 5)
     .map(({ p, score }) => ({ ...p, score: Math.round(score * 100) / 100 }));
 }
 
 export function passage(id: string): Passage | undefined {
   return index().passages.find((p) => p.id === id);
+}
+
+export function allPassages(): Passage[] {
+  return index().passages;
 }
