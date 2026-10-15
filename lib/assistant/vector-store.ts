@@ -11,16 +11,21 @@ export interface VectorStore {
 export const supabaseConfigured = () =>
   Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
 
+/** Legacy service_role keys are JWTs and go in both headers; new sb_secret_ keys go in apikey only. */
+export function supabaseHeaders(): Record<string, string> {
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+  return { apikey: key, ...(key.startsWith("eyJ") ? { Authorization: `Bearer ${key}` } : {}) };
+}
+
 /** Postgres + pgvector on Supabase, queried through the match_passages SQL function (HNSW, cosine). */
 export function supabaseStore(): VectorStore {
   const url = process.env.SUPABASE_URL!.replace(/\/$/, "");
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY!;
   return {
     name: "supabase-pgvector",
     async query(embedding, k, lang) {
       const res = await fetch(`${url}/rest/v1/rpc/match_passages`, {
         method: "POST",
-        headers: { apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+        headers: { ...supabaseHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({ query_embedding: embedding, match_count: k, filter_lang: lang }),
       });
       if (!res.ok) throw new Error(`match_passages failed: ${res.status} ${await res.text()}`);

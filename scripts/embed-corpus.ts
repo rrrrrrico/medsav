@@ -9,7 +9,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
 import { embed, EMBEDDING_MODEL, passageText } from "@/lib/assistant/embeddings";
 import { allPassages } from "@/lib/assistant/search";
-import { supabaseConfigured } from "@/lib/assistant/vector-store";
+import { supabaseConfigured, supabaseHeaders } from "@/lib/assistant/vector-store";
 
 interface Row { id: string; lang: "en" | "zh"; md5: string; model: string; embedding: number[] }
 
@@ -18,7 +18,6 @@ const md5 = (s: string) => createHash("md5").update(s).digest("hex");
 
 async function upload(rows: Row[]) {
   const url = process.env.SUPABASE_URL!.replace(/\/$/, "");
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY!;
   const byId = new Map(allPassages().map((p) => [p.id, p]));
   const records = rows.map((r) => {
     const p = byId.get(r.id)!;
@@ -30,17 +29,14 @@ async function upload(rows: Row[]) {
   for (let i = 0; i < records.length; i += 100) {
     const res = await fetch(`${url}/rest/v1/vhis_passages`, {
       method: "POST",
-      headers: {
-        apikey: key, Authorization: `Bearer ${key}`, "Content-Type": "application/json",
-        Prefer: "resolution=merge-duplicates,return=minimal",
-      },
+      headers: { ...supabaseHeaders(), "Content-Type": "application/json", Prefer: "resolution=merge-duplicates,return=minimal" },
       body: JSON.stringify(records.slice(i, i + 100)),
     });
     if (!res.ok) throw new Error(`upsert failed: ${res.status} ${await res.text()}`);
   }
   const ids = records.map((r) => `"${r.id}"`).join(",");
   const del = await fetch(`${url}/rest/v1/vhis_passages?id=not.in.(${ids})`, {
-    method: "DELETE", headers: { apikey: key, Authorization: `Bearer ${key}` },
+    method: "DELETE", headers: supabaseHeaders(),
   });
   if (!del.ok) throw new Error(`cleanup failed: ${del.status} ${await del.text()}`);
   console.log(`upserted ${records.length} passages into Supabase`);
