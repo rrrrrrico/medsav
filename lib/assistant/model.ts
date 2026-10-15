@@ -23,7 +23,7 @@ export function availableProviders(): Provider[] {
 }
 
 export function defaultProvider(): Provider {
-  const preferred = (process.env.ASSISTANT_PROVIDER as Provider | undefined) ?? "deepseek";
+  const preferred = (process.env.ASSISTANT_PROVIDER as Provider | undefined) ?? "qwen";
   const available = availableProviders();
   return available.includes(preferred) ? preferred : available[0] ?? preferred;
 }

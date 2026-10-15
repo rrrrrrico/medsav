@@ -50,9 +50,9 @@ export const comparePlansTool = tool(
     json(comparePlans(certification_nos, gender, smoker, from_age, to_age)),
   {
     name: "compare_plans",
-    description: "Compare 2-6 plans by certification number: premium at from_age, premium at to_age and total from from_age to to_age.",
+    description: "Compare 2-6 plans: premium at from_age, premium at to_age and total from from_age to to_age. Prefer certification numbers (from plan_details); a plan name also works and takes the first match.",
     schema: z.object({
-      certification_nos: z.array(z.string()).min(2).max(6),
+      certification_nos: z.array(z.string()).min(2).max(6).describe("Certification numbers or plan names"),
       gender, smoker, from_age: age, to_age: age,
     }),
   },

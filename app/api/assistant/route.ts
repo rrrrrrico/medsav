@@ -51,10 +51,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "assistant_not_configured" }, { status: 503 });
   }
 
-  try {
-    return NextResponse.json(await ask(messages, provider));
-  } catch (err) {
-    console.error("[assistant]", err);
-    return NextResponse.json({ error: "assistant_failed" }, { status: 502 });
+  const order = [provider, ...providers.filter((p) => p !== provider)];
+  for (let attempt = 0; attempt < order.length; attempt++) {
+    const p = order[attempt];
+    try {
+      const reply = await ask(messages, p);
+      return NextResponse.json(attempt ? { ...reply, fallback_from: order[0] } : reply);
+    } catch (err) {
+      console.error(`[assistant] ${p} failed`, err);
+    }
   }
+  return NextResponse.json({ error: "assistant_failed" }, { status: 502 });
 }

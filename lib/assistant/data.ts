@@ -183,7 +183,7 @@ export function comparePlans(certs: string[], gender: Gender, smoker: boolean, f
   return {
     query: { gender, smoker, from_age: fromAge, to_age: toAge, status },
     plans: certs.map((c) => {
-      const p = m.plans.find((x) => x.c.toLowerCase() === c.trim().toLowerCase());
+      const p = m.plans.find((x) => x.c.toLowerCase() === c.trim().toLowerCase()) ?? findPlan(c)[0];
       if (!p) return { certification_no: c, error: "not found" };
       const s = series(p, status);
       return {

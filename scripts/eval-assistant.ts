@@ -58,7 +58,7 @@ async function main() {
   const cases = only ? CASES.filter((c) => c.id === only) : CASES;
   const rows: {
     id: string; kind: string; lang: string; question: string; pass: boolean; detail: Record<string, unknown>;
-    tools: string[]; ms: number | null; answer: string | null;
+    tools: string[]; retries: number | null; ms: number | null; answer: string | null;
   }[] = [];
   for (const c of cases) {
     let reply: AssistantReply | null = null;
@@ -70,7 +70,8 @@ async function main() {
     }
     const s = reply ? score(c, reply) : { pass: false, detail: { error } };
     rows.push({ id: c.id, kind: c.kind, lang: c.lang, question: c.question, ...s,
-      tools: reply?.steps.map((x) => x.tool) ?? [], ms: reply?.ms ?? null, answer: reply?.answer ?? null });
+      tools: reply?.steps.map((x) => x.tool) ?? [], retries: reply?.grounding_retries ?? null,
+      ms: reply?.ms ?? null, answer: reply?.answer ?? null });
     console.log(`${s.pass ? "PASS" : "FAIL"} ${c.id} ${c.kind.padEnd(9)} ${reply ? `${(reply.ms / 1000).toFixed(1)}s` : "error"}  ${c.question}`);
   }
 
@@ -88,6 +89,7 @@ async function main() {
       : null,
     behaviour: rate(by("behaviour")),
     median_latency_s: ms.length ? Math.round(ms[Math.floor(ms.length / 2)] / 100) / 10 : null,
+    grounding_retries: rows.reduce((a, r) => a + (r.retries ?? 0), 0),
   };
   console.log("\n", summary);
 
