@@ -5,8 +5,10 @@ from __future__ import annotations
 import json
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
+from pathlib import Path
 from typing import Dict, List, Optional
 
+import requests
 from pyspark.sql import functions as F
 
 from . import config  # sets sys.path for scripts/
@@ -14,12 +16,29 @@ from . import config  # sets sys.path for scripts/
 import build_plan_csvs as bpc  # noqa: E402
 
 
+def _fetch_pdf(url: str, cert: str) -> Optional[Path]:
+    """Always download: insurers replace premium PDFs under the same file name each year."""
+    cache = bpc.PDF_DIRS[0]
+    cache.mkdir(parents=True, exist_ok=True)
+    dest = cache / (url.rstrip("/").split("/")[-1] or f"{cert}.pdf")
+    try:
+        resp = requests.get(url, timeout=120)
+        resp.raise_for_status()
+    except requests.RequestException as exc:
+        print(f"  PDF download failed {cert}: {exc}")
+        return None
+    dest.write_bytes(resp.content)
+    return dest
+
+
 def _resolve_pdfs(catalog: List[Dict[str, str]], download: bool) -> Dict[str, Optional[str]]:
     def one(row: Dict[str, str]) -> tuple:
         cert = row["certification_no"]
-        path = bpc.find_local_pdf(cert)
-        if path is None and download and row.get("premium_pdf_url"):
-            path = bpc.download_pdf(row["premium_pdf_url"], cert)
+        path = None
+        if download and row.get("premium_pdf_url"):
+            path = _fetch_pdf(row["premium_pdf_url"], cert)
+        if path is None:
+            path = bpc.find_local_pdf(cert)
         return cert, str(path) if path else None
 
     with ThreadPoolExecutor(max_workers=8) as pool:

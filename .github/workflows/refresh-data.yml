@@ -22,25 +22,18 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "17"
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: pipeline/requirements.txt
-
-      - name: Restore premium PDF cache
-        uses: actions/cache@v4
-        with:
-          path: .cache/pdfs
-          key: vhis-pdfs-${{ github.run_id }}
-          restore-keys: vhis-pdfs-
 
       - run: pip install -r pipeline/requirements.txt
 
@@ -49,7 +42,7 @@ jobs:
 
       - name: Keep quality report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: quality-report
           path: .lakehouse/reports/quality-report.json

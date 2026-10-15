@@ -1,9 +1,9 @@
 {
-  "run_at": "2026-10-15T05:18:25",
+  "run_at": "2026-10-15T13:32:19",
   "passed": true,
-  "rows": 458810,
+  "rows": 430022,
   "plans": 579,
-  "pdf_extended": 567,
+  "pdf_extended": 510,
   "checks": [
     {
       "check": "valid values (premium > 0, age 0-130, known status, currency)",
@@ -35,6 +35,14 @@
       }
     },
     {
+      "check": "status ratios hold within 10% where PDF ages join gov ages (catches swapped columns and outdated PDFs)",
+      "passed": true,
+      "detail": {
+        "plans": 0,
+        "examples": []
+      }
+    },
+    {
       "check": "no PDF parse errors",
       "passed": true,
       "detail": {
@@ -54,7 +62,8 @@
       "passed": true,
       "detail": {
         "previous": 458810,
-        "now": 458810
+        "now": 430022,
+        "overridden": "--allow-shrink"
       }
     },
     {
@@ -62,7 +71,8 @@
       "passed": true,
       "detail": {
         "previous": 567,
-        "now": 567
+        "now": 510,
+        "overridden": "--allow-shrink"
       }
     }
   ]

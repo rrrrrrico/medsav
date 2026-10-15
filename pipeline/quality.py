@@ -13,6 +13,7 @@ from . import config
 
 STATUSES = ("SFN", "SFY", "SMN", "SMY", "RFN", "RFY", "RMN", "RMY")
 MAX_DROP = 0.05
+SHAPE_TOLERANCE = 0.10
 
 
 def _previous_release() -> Dict[str, int]:
@@ -35,7 +36,7 @@ def _previous_release() -> Dict[str, int]:
     return prev
 
 
-def run(limit: int = 0) -> bool:
+def run(limit: int = 0, allow_shrink: bool = False) -> bool:
     spark = config.spark_session()
     prem = spark.read.format("delta").load(str(config.SILVER_PREMIUMS))
     plans = spark.read.format("delta").load(str(config.SILVER_PLAN_STATUS))
@@ -72,6 +73,11 @@ def run(limit: int = 0) -> bool:
     check("every plan with gov data is in the output", plan_count == gov_plans,
           {"gov_plans": gov_plans, "output_plans": plan_count})
 
+    broken = [r.certification_no for r in plans.where(F.col("shape_break") > SHAPE_TOLERANCE).collect()]
+    check(f"status ratios hold within {SHAPE_TOLERANCE:.0%} where PDF ages join gov ages "
+          "(catches swapped columns and outdated PDFs)",
+          not broken, {"plans": len(broken), "examples": broken[:5]})
+
     errors = plans.where(F.col("pdf_outcome") == "error").count()
     check("no PDF parse errors", errors == 0, {"errors": errors})
 
@@ -80,8 +86,11 @@ def run(limit: int = 0) -> bool:
                            ("PDF-extended plans", extended, "pdf_extended")):
         before = prev.get(key)
         if before:
-            check(f"{name} did not drop more than {int(MAX_DROP * 100)}%", now >= before * (1 - MAX_DROP),
-                  {"previous": before, "now": now})
+            ok = now >= before * (1 - MAX_DROP)
+            detail = {"previous": before, "now": now}
+            if not ok and allow_shrink:
+                ok, detail["overridden"] = True, "--allow-shrink"
+            check(f"{name} did not drop more than {int(MAX_DROP * 100)}%", ok, detail)
 
     passed = all(c["passed"] for c in checks)
     report = {

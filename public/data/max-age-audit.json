@@ -1,309 +1,379 @@
 {
   "checked_with_pdf": 579,
-  "ok": 536,
-  "gaps": 43,
+  "ok": 526,
+  "gaps": 53,
   "pdf_missing_local": 0,
   "gap_details": [
     {
-      "cert": "F00077-08-000-01",
+      "cert": "F00029-01-000-06",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 127,
-      "gap": 47
+      "pdf_max": 99,
+      "gap": 19
     },
     {
-      "cert": "F00077-09-000-01",
+      "cert": "F00029-01-001-06",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 127,
-      "gap": 47
+      "pdf_max": 99,
+      "gap": 19
     },
     {
-      "cert": "F00050-05-000-04",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00050-06-000-04",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00050-08-000-01",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00050-14-000-01",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00050-15-000-01",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00050-16-000-01",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00060-01-000-07",
+      "cert": "F00029-02-000-06",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 120,
-      "gap": 40
+      "pdf_max": 99,
+      "gap": 19
     },
     {
-      "cert": "F00060-02-000-07",
+      "cert": "F00029-02-001-06",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 120,
-      "gap": 40
+      "pdf_max": 99,
+      "gap": 19
     },
     {
-      "cert": "F00060-03-000-07",
+      "cert": "F00029-03-000-06",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 120,
-      "gap": 40
+      "pdf_max": 99,
+      "gap": 19
     },
     {
-      "cert": "F00060-04-000-07",
+      "cert": "F00029-03-001-06",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 120,
-      "gap": 40
+      "pdf_max": 99,
+      "gap": 19
     },
     {
-      "cert": "F00060-06-000-07",
+      "cert": "F00035-05-000-01",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 120,
-      "gap": 40
+      "pdf_max": 99,
+      "gap": 19
     },
     {
-      "cert": "F00060-07-000-07",
+      "cert": "F00035-06-000-01",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 120,
-      "gap": 40
+      "pdf_max": 99,
+      "gap": 19
     },
     {
-      "cert": "F00060-08-000-07",
+      "cert": "F00035-07-000-01",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 120,
-      "gap": 40
+      "pdf_max": 99,
+      "gap": 19
     },
     {
-      "cert": "F00060-09-000-04",
+      "cert": "F00035-08-000-01",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 120,
-      "gap": 40
+      "pdf_max": 99,
+      "gap": 19
     },
     {
-      "cert": "F00060-10-000-04",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 80,
-      "pdf_max": 120,
-      "gap": 40
-    },
-    {
-      "cert": "F00060-11-000-04",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 80,
-      "pdf_max": 120,
-      "gap": 40
-    },
-    {
-      "cert": "F00060-12-000-04",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 80,
-      "pdf_max": 120,
-      "gap": 40
-    },
-    {
-      "cert": "F00068-04-000-01",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00068-05-000-01",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00071-06-000-03",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00071-07-000-03",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00071-08-000-03",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00071-14-000-03",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00071-15-000-03",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00071-16-000-03",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00071-24-000-01",
-      "issue": "pdf_has_higher_ages_but_unvalidated",
-      "csv_max": 81,
-      "pdf_max": 121,
-      "gap": 40
-    },
-    {
-      "cert": "F00027-05-000-03",
+      "cert": "F00069-01-000-02",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 81,
       "pdf_max": 100,
       "gap": 19
     },
     {
-      "cert": "F00027-05-001-03",
+      "cert": "F00069-02-000-02",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 81,
       "pdf_max": 100,
       "gap": 19
     },
     {
-      "cert": "F00027-06-000-03",
+      "cert": "F00069-03-000-02",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 81,
       "pdf_max": 100,
       "gap": 19
     },
     {
-      "cert": "F00027-06-001-03",
+      "cert": "F00069-04-000-02",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 81,
       "pdf_max": 100,
       "gap": 19
     },
     {
-      "cert": "F00027-07-000-03",
+      "cert": "F00069-05-000-02",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 81,
       "pdf_max": 100,
       "gap": 19
     },
     {
-      "cert": "F00034-14-000-05",
+      "cert": "F00069-06-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 81,
+      "pdf_max": 100,
+      "gap": 19
+    },
+    {
+      "cert": "F00070-01-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 81,
+      "pdf_max": 100,
+      "gap": 19
+    },
+    {
+      "cert": "F00070-02-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 81,
+      "pdf_max": 100,
+      "gap": 19
+    },
+    {
+      "cert": "F00070-03-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 81,
+      "pdf_max": 100,
+      "gap": 19
+    },
+    {
+      "cert": "F00070-04-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 81,
+      "pdf_max": 100,
+      "gap": 19
+    },
+    {
+      "cert": "F00070-05-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 81,
+      "pdf_max": 100,
+      "gap": 19
+    },
+    {
+      "cert": "F00070-06-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 81,
+      "pdf_max": 100,
+      "gap": 19
+    },
+    {
+      "cert": "F00070-07-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 81,
+      "pdf_max": 100,
+      "gap": 19
+    },
+    {
+      "cert": "F00070-08-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 81,
+      "pdf_max": 100,
+      "gap": 19
+    },
+    {
+      "cert": "F00070-09-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 81,
+      "pdf_max": 100,
+      "gap": 19
+    },
+    {
+      "cert": "F00070-10-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 81,
+      "pdf_max": 100,
+      "gap": 19
+    },
+    {
+      "cert": "F00070-11-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 81,
+      "pdf_max": 100,
+      "gap": 19
+    },
+    {
+      "cert": "F00070-12-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 81,
+      "pdf_max": 100,
+      "gap": 19
+    },
+    {
+      "cert": "S00020-01-000-02",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
       "pdf_max": 99,
       "gap": 19
     },
     {
-      "cert": "F00034-18-000-05",
+      "cert": "F00040-01-000-05",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 99,
-      "gap": 19
+      "pdf_max": 81,
+      "gap": 1
     },
     {
-      "cert": "F00074-10-000-01",
+      "cert": "F00040-02-000-05",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 99,
-      "gap": 19
+      "pdf_max": 81,
+      "gap": 1
     },
     {
-      "cert": "F00074-11-000-01",
+      "cert": "F00040-03-000-05",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 99,
-      "gap": 19
+      "pdf_max": 81,
+      "gap": 1
     },
     {
-      "cert": "F00074-12-000-01",
+      "cert": "F00040-04-000-05",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 99,
-      "gap": 19
+      "pdf_max": 81,
+      "gap": 1
     },
     {
-      "cert": "F00074-16-000-01",
+      "cert": "F00040-05-000-05",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 99,
-      "gap": 19
+      "pdf_max": 81,
+      "gap": 1
     },
     {
-      "cert": "F00081-07-000-01",
+      "cert": "F00040-06-000-05",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 99,
-      "gap": 19
+      "pdf_max": 81,
+      "gap": 1
     },
     {
-      "cert": "F00081-08-000-01",
+      "cert": "F00040-07-000-05",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 99,
-      "gap": 19
+      "pdf_max": 81,
+      "gap": 1
     },
     {
-      "cert": "F00081-09-000-01",
+      "cert": "F00040-08-000-05",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 99,
-      "gap": 19
+      "pdf_max": 81,
+      "gap": 1
     },
     {
-      "cert": "F00081-10-000-01",
+      "cert": "F00040-09-000-03",
       "issue": "pdf_has_higher_ages_but_unvalidated",
       "csv_max": 80,
-      "pdf_max": 99,
-      "gap": 19
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-10-000-03",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-11-000-03",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-12-000-03",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-13-000-03",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-14-000-03",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-15-000-03",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-16-000-03",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-17-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-18-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-19-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-20-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-21-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-22-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-23-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
+    },
+    {
+      "cert": "F00040-24-000-02",
+      "issue": "pdf_has_higher_ages_but_unvalidated",
+      "csv_max": 80,
+      "pdf_max": 81,
+      "gap": 1
     }
   ]
 }

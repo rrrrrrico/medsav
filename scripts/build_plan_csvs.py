@@ -689,6 +689,48 @@ def scale_maps(
     }
 
 
+COLUMN_MATCH_AGES = 5
+COLUMN_MATCH_TOLERANCE = 0.01  # after removing a constant offset
+MAX_COLUMN_OFFSET = 0.05
+
+
+def match_pdf_columns(
+    gov_maps: Dict[str, Dict[int, float]],
+    scaled: Dict[str, Dict[int, float]],
+    gov_max: int,
+) -> Dict[str, Tuple[str, float]]:
+    """
+    For each gov status, find the PDF column whose premiums track it over the
+    last few gov ages. PDF headers are not trusted: many tables are laid out
+    as non-smoker | smoker, which the parser reads as male | female.
+    Returns status -> (pdf column, ratio that maps the column onto gov).
+    """
+    ages = range(gov_max - COLUMN_MATCH_AGES + 1, gov_max + 1)
+    matches: Dict[str, Tuple[str, float]] = {}
+    for status, gov_ages in gov_maps.items():
+        best: Optional[Tuple[float, float, str]] = None
+        for column, pdf_ages in scaled.items():
+            shared = [a for a in ages if a in gov_ages and a in pdf_ages
+                      and gov_ages[a] > 0 and pdf_ages[a] > 0]
+            if len(shared) < 2:
+                continue
+            ratios = sorted(gov_ages[a] / pdf_ages[a] for a in shared)
+            ratio = ratios[len(ratios) // 2]
+            if abs(ratio - 1) > MAX_COLUMN_OFFSET:
+                continue
+            err = max(abs(pdf_ages[a] * ratio - gov_ages[a]) / gov_ages[a] for a in shared)
+            candidate = (err, abs(ratio - 1), column)
+            if best is None or candidate < best:
+                best = candidate
+        if best and best[0] <= COLUMN_MATCH_TOLERANCE:
+            column = best[2]
+            ratios = sorted(gov_ages[a] / scaled[column][a] for a in ages
+                            if a in gov_ages and a in scaled[column] and scaled[column][a] > 0)
+            ratio = ratios[len(ratios) // 2]
+            matches[status] = (column, 1.0 if abs(ratio - 1) < 0.001 else ratio)
+    return matches
+
+
 def extend_with_pdf(
     gov_maps: Dict[str, Dict[int, float]],
     pdf_maps: Dict[str, Dict[int, float]],
@@ -706,14 +748,8 @@ def extend_with_pdf(
     else:
         scaled = scale_maps(pdf_maps, factor)
 
-    validated = False
-    for status in STATUSES:
-        if status in gov_maps and status in scaled and boundary_ok(
-            gov_maps[status], scaled[status], gov_max
-        ):
-            validated = True
-            break
-    if not validated:
+    matches = match_pdf_columns(gov_maps, scaled, gov_max)
+    if not matches:
         return merged, 0
 
     added = 0
@@ -727,23 +763,28 @@ def extend_with_pdf(
         "RMY": "SMY",
         "RFY": "SFY",
     }
-    for status, pdf_ages in scaled.items():
-        target = merged.setdefault(status, {})
-        gov_ages = gov_maps.get(status) or {}
-        if gov_ages:
-            # Keep API ages; only older PDF ages are new.
-            status_max = max(gov_ages)
-        elif status.startswith("R") and (gov_maps.get(partner[status]) or {}):
-            # API published the standard plan but not the rider. The PDF still
-            # has rider (or unisex) premiums from age 0.
-            status_max = -1
-        else:
-            status_max = gov_max
-        for age, premium in pdf_ages.items():
+    for status, gov_ages in gov_maps.items():
+        if status not in matches:
+            continue
+        column, ratio = matches[status]
+        target = merged[status]
+        status_max = max(gov_ages)
+        for age, premium in scaled[column].items():
             if age <= status_max or age in target:
                 continue
-            target[age] = round(premium, 2)
+            target[age] = round(premium * ratio, 2)
             added += 1
+
+    # API published the standard plan but not the rider. The PDF still has
+    # rider (or unisex) premiums from age 0; there is nothing to match against.
+    for status, pdf_ages in scaled.items():
+        if status in gov_maps or not status.startswith("R") or not gov_maps.get(partner[status]):
+            continue
+        target = merged.setdefault(status, {})
+        for age, premium in pdf_ages.items():
+            if age not in target:
+                target[age] = round(premium, 2)
+                added += 1
 
     # Unisex tables publish one premium column. Gov male and female match, but
     # the PDF parse only stores that column on one sex, so the other sex stops

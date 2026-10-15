@@ -16,9 +16,30 @@ from . import config
 PREMIUM_SCHEMA = (
     "certification_no string, prem_date string, currency string, age_counting_method string, "
     "max_age int, pdf_extended_cells int, age int, status string, annual_premium double, "
-    "source string, pdf_outcome string"
+    "source string, pdf_outcome string, shape_break double"
 )
 KEY = ["certification_no", "prem_date", "status", "age"]
+
+
+def _shape_break(gov_maps, merged):
+    """
+    How much the premium ratios between statuses jump from the last gov age to
+    the first PDF age. Swapped columns (e.g. smoker under non-smoker) jump ~20%.
+    """
+    if not gov_maps:
+        return None
+    gov_max = max(max(ages) for ages in gov_maps.values() if ages)
+    ref = next((st for st in ("SMN", "SFN", "RMN", "RFN") if st in merged), None)
+    if ref is None or gov_max + 1 not in merged[ref] or gov_max not in merged[ref]:
+        return None
+    breaks = []
+    for st, ages in merged.items():
+        if st == ref or gov_max not in ages or gov_max + 1 not in ages:
+            continue
+        before = ages[gov_max] / merged[ref][gov_max]
+        after = ages[gov_max + 1] / merged[ref][gov_max + 1]
+        breaks.append(abs(after / before - 1))
+    return max(breaks) if breaks else None
 
 
 def _extend_plans(batches: Iterator[pd.DataFrame]) -> Iterator[pd.DataFrame]:
@@ -31,7 +52,7 @@ def _extend_plans(batches: Iterator[pd.DataFrame]) -> Iterator[pd.DataFrame]:
             for cell in json.loads(plan.gov_cells):
                 gov_maps.setdefault(cell["status"], {})[int(cell["age"])] = float(cell["annual_premium"])
 
-            maps, added, outcome = gov_maps, 0, "missing"
+            maps, added, outcome, shape_break = gov_maps, 0, "missing", None
             if plan.content is not None:
                 try:
                     with tempfile.NamedTemporaryFile(suffix=".pdf") as tmp:
@@ -39,6 +60,7 @@ def _extend_plans(batches: Iterator[pd.DataFrame]) -> Iterator[pd.DataFrame]:
                         tmp.flush()
                         pdf_maps = bpc.extract_pdf_series(Path(tmp.name), gov_maps=gov_maps)
                     maps, added = bpc.extend_with_pdf(gov_maps, pdf_maps)
+                    shape_break = _shape_break(gov_maps, maps)
                     if added:
                         outcome = "extended"
                     elif bpc.max_age_in_maps(pdf_maps) > bpc.max_age_in_maps(gov_maps):
@@ -47,7 +69,7 @@ def _extend_plans(batches: Iterator[pd.DataFrame]) -> Iterator[pd.DataFrame]:
                         outcome = "complete"
                 except Exception as exc:  # noqa: BLE001
                     print(f"  PDF parse error {plan.certification_no}: {exc}")
-                    maps, added, outcome = gov_maps, 0, "error"
+                    maps, added, outcome, shape_break = gov_maps, 0, "error", None
 
             max_age = bpc.max_age_in_maps(maps)
             for status, ages in maps.items():
@@ -56,7 +78,7 @@ def _extend_plans(batches: Iterator[pd.DataFrame]) -> Iterator[pd.DataFrame]:
                     out.append((
                         plan.certification_no, plan.prem_date, plan.currency, plan.age_counting_method,
                         max_age, added, age, status, float(premium),
-                        "gov" if age in gov_ages else "pdf", outcome,
+                        "gov" if age in gov_ages else "pdf", outcome, shape_break,
                     ))
         yield pd.DataFrame(out, columns=[c.split()[0] for c in PREMIUM_SCHEMA.split(", ")])
 
@@ -84,6 +106,7 @@ def run() -> None:
         .agg(F.first("pdf_outcome").alias("pdf_outcome"),
              F.max("max_age").alias("max_age"),
              F.max("pdf_extended_cells").alias("pdf_extended_cells"),
+             F.max("shape_break").alias("shape_break"),
              F.count("*").alias("rows"))
         .write.format("delta").mode("overwrite").option("overwriteSchema", "true")
         .save(str(config.SILVER_PLAN_STATUS)))

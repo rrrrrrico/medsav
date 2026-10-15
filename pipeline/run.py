@@ -26,13 +26,15 @@ def main() -> int:
     parser.add_argument("--no-download", action="store_true", help="use cached PDFs only")
     parser.add_argument("--no-publish", action="store_true")
     parser.add_argument("--out", type=Path, default=config.PUBLIC_DATA)
+    parser.add_argument("--allow-shrink", action="store_true",
+                        help="one-off: accept a release smaller than the last one")
     args = parser.parse_args()
 
     started = time.time()
     bronze.run(limit=args.limit, skip_pdf=args.skip_pdf, download=not args.no_download)
     silver.run()
 
-    if not quality.run(limit=args.limit):
+    if not quality.run(limit=args.limit, allow_shrink=args.allow_shrink):
         print("[pipeline] quality gate FAILED, nothing published", file=sys.stderr)
         return 1
 
