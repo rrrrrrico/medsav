@@ -47,12 +47,17 @@ const TOOL_LABEL: Record<string, [string, string]> = {
   search_documents: ["Searched official VHIS documents", "搜尋自願醫保官方文件"],
 };
 
+function sources(citations: Citation[]): Citation[] {
+  return citations.filter((c, i) => citations.findIndex((x) => x.url === c.url) === i);
+}
+
 function linkCitations(answer: string, citations: Citation[]): string {
-  const order = citations.map((c) => c.id);
-  return answer.replace(/\[(c\d{4})\]/g, (match, id: string) => {
-    const n = order.indexOf(id);
-    return n >= 0 ? `[[${n + 1}]](${citations[n].url})` : "";
-  });
+  const unique = sources(citations);
+  return answer.replace(/\s?\[(c\d{4})\]/g, (_match, id: string) => {
+    const url = citations.find((c) => c.id === id)?.url;
+    const n = unique.findIndex((c) => c.url === url);
+    return n < 0 ? "" : ` [[${n + 1}]](${url})`;
+  }).replace(/(\s\[\[(\d+)\]\]\([^)]+\))(\s\[\[\2\]\]\([^)]+\))+/g, "$1");
 }
 
 export function AssistantView() {
@@ -170,7 +175,7 @@ export function AssistantView() {
                     </div>
                     {!!turn.citations?.length && (
                       <ol className="text-xs text-muted-foreground border-t pt-2 space-y-0.5">
-                        {turn.citations.map((c, n) => (
+                        {sources(turn.citations).map((c, n) => (
                           <li key={c.id}>
                             [{n + 1}] <a href={c.url} target="_blank" rel="noreferrer" className="underline underline-offset-2">{c.title}</a>
                           </li>
