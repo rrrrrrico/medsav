@@ -39,6 +39,9 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: "8mb",
     },
+    outputFileTracingIncludes: {
+      "/api/assistant": ["./public/data/insights/matrix.json", "./lib/assistant/corpus.json"],
+    },
   },
 };
 

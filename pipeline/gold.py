@@ -85,10 +85,13 @@ def _export_matrix(prem, catalog, export_dir: Path) -> None:
 
     A status whose premiums equal an earlier status is stored as that status's name instead of a list.
     Rider-only plans (R* statuses) are stored under the matching S* keys with kind "r".
+    "m" is the plan's highest priced age in the full data, which may exceed MATRIX_MAX_AGE.
     """
     cols = [c for c in ("company_name_en", "company_name_zh", "plan_name_en", "plan_name_zh", "type_en", "type_zh")
             if c in catalog.columns]
     plans = {r.certification_no: r.asDict() for r in catalog.select("certification_no", *cols).collect()}
+    top_age = {(r.certification_no, r.currency): int(r.top) for r in
+               prem.groupBy("certification_no", "currency").agg(F.max("age").alias("top")).collect()}
     cells = (prem.where(F.col("age") <= MATRIX_MAX_AGE)
              .select("certification_no", "currency", "status", "age", "annual_premium").toPandas())
 
@@ -119,6 +122,7 @@ def _export_matrix(prem, catalog, export_dir: Path) -> None:
             "i": insurer_index[name_en],
             "n": [meta.get("plan_name_en") or cert, meta.get("plan_name_zh") or meta.get("plan_name_en") or cert],
             "t": [meta.get("type_en") or "", meta.get("type_zh") or meta.get("type_en") or ""],
+            "m": top_age.get((cert, currency)),
             "p": prices,
         })
     matrix = {"max_age": MATRIX_MAX_AGE, "insurers": insurers, "plans": out}
