@@ -1,6 +1,7 @@
 import { embed, embeddingsAvailable } from "./embeddings";
+import { hydeEnabled, hypotheticalPassage } from "./hyde";
 import { keywordSearch, LangOption, Passage, passage, queryLang } from "./search";
-import { supabaseConfigured, supabaseStore, VectorStore } from "./vector-store";
+import { fileStore, supabaseConfigured, supabaseStore, VectorStore } from "./vector-store";
 
 export type RetrievalMode = "keyword" | "vector" | "hybrid";
 export type Retrieved = Passage & { score: number };
@@ -13,13 +14,20 @@ const DEFAULT_MODE: RetrievalMode = (process.env.RETRIEVAL_MODE as RetrievalMode
 
 let defaultStore: VectorStore | null | undefined;
 
+/** Supabase in production; VECTOR_STORE_FILE (e.g. eval/.cache/embeddings.json) lets local evals use vectors too. */
 function storeFromEnv(): VectorStore | null {
-  if (defaultStore === undefined) defaultStore = supabaseConfigured() && embeddingsAvailable() ? supabaseStore() : null;
+  if (defaultStore === undefined) {
+    const file = process.env.VECTOR_STORE_FILE;
+    defaultStore = !embeddingsAvailable() ? null : supabaseConfigured() ? supabaseStore() : file ? fileStore(file) : null;
+  }
   return defaultStore;
 }
 
-async function vectorSearch(query: string, k: number, lang: LangOption | undefined, store: VectorStore) {
-  const [embedding] = await embed([query]);
+const mean = (vs: number[][]) => vs[0].map((_, j) => vs.reduce((a, v) => a + v[j], 0) / vs.length);
+
+async function vectorSearch(query: string, k: number, lang: LangOption | undefined, store: VectorStore, hyde: boolean) {
+  const draft = hyde ? await hypotheticalPassage(query) : null;
+  const embedding = mean(await embed(draft ? [draft, query] : [query]));
   const hits = await store.query(embedding, k, queryLang(query, lang));
   return hits.flatMap((h) => {
     const p = passage(h.id);
@@ -29,12 +37,13 @@ async function vectorSearch(query: string, k: number, lang: LangOption | undefin
 
 /**
  * Vector search by default; "hybrid" merges BM25 and vector results by reciprocal rank fusion.
+ * With HyDE on (RETRIEVAL_HYDE=1), the vector query is the mean embedding of the question and a drafted answer.
  * Falls back to keyword search alone when no vector store is configured or the embedding call fails.
  */
 export async function retrieve(
   query: string,
   opts: {
-    k?: number; lang?: LangOption; mode?: RetrievalMode; store?: VectorStore | null; keywordWeight?: number;
+    k?: number; lang?: LangOption; mode?: RetrievalMode; store?: VectorStore | null; keywordWeight?: number; hyde?: boolean;
   } = {},
 ): Promise<{ mode: RetrievalMode; passages: Retrieved[] }> {
   const k = Math.min(opts.k ?? 5, 8);
@@ -44,7 +53,7 @@ export async function retrieve(
 
   let vector: Retrieved[];
   try {
-    vector = await vectorSearch(query, mode === "vector" ? k : CANDIDATES, opts.lang, store);
+    vector = await vectorSearch(query, mode === "vector" ? k : CANDIDATES, opts.lang, store, opts.hyde ?? hydeEnabled());
   } catch (err) {
     console.error("[retrieve] vector search failed, using keyword only", err);
     return { mode: "keyword", passages: keywordSearch(query, { k, lang: opts.lang }) };

@@ -1,0 +1,588 @@
+{
+  "summary": {
+    "provider": "deepseek",
+    "prompt_version": "v3",
+    "run_at": "2026-10-23T07:39:59.483Z",
+    "cases": 30,
+    "pass_rate": 100,
+    "data_accuracy": 100,
+    "docs_answer_and_citation": 100,
+    "retrieval_recall_at_5": 100,
+    "behaviour": 100,
+    "median_latency_s": 3.1,
+    "grounding_retries": 0
+  },
+  "rows": [
+    {
+      "id": "d01",
+      "kind": "data",
+      "lang": "en",
+      "question": "Which Standard Plan is cheapest for a 45-year-old woman who doesn't smoke, and what is the annual premium?",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "3165"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "find_premiums"
+      ],
+      "retries": 0,
+      "ms": 3082,
+      "answer": "The cheapest Standard Plan for a 45-year-old non-smoking woman is **ZA VHIS (ZA 自願醫保)** from ZA Life Limited, at **HK$3,165** a year.\n\n| Rank | Plan | Insurer | Annual premium |\n|---|---|---|---|\n| 1 | ZA VHIS (ZA 自願醫保) | ZA Life | HK$3,165 |\n| 2 | WeHealth (永明港健康醫療保) | Sun Life | HK$3,472 |\n| 3 | Liberty Insurance Standard VHIS Plan | Liberty International | HK$3,504 |\n| 4 | Bowtie VHIS Standard | Bowtie Life | HK$3,504 |\n| 5 | AXA WiseGuard Medical Insurance Plan | AXA China Region | HK$3,681 |\n\nMarket context at this age (33 Standard Plans priced): lowest HK$3,165, median HK$4,689, highest HK$7,021. Premiums are insurers' published standard premiums before underwriting loadings or discounts. Please confirm details with the insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "d02",
+      "kind": "data",
+      "lang": "zh",
+      "question": "60歲男士，有吸煙，最平嘅標準計劃每年保費幾多？",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "5315"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "find_premiums"
+      ],
+      "retries": 0,
+      "ms": 3020,
+      "answer": "60歲吸煙男士，最平的標準計劃是眾安人壽 ZA 自願醫保，每年保費 HK$5,315（S00045-01-000-01）。\n\n| 保險公司 | 計劃 | 每年保費 |\n|---|---|---|\n| 眾安人壽 | ZA 自願醫保 | HK$5,315 |\n| 香港永明金融 | 永明港健康醫療保 | HK$6,204 |\n| 中國人壽（海外） | 衛您健康醫療保險計劃 | HK$6,334 |\n| 宏利 | 宏利愛守護自願醫保標準計劃 | HK$6,588 |\n| 保泰人壽 | 保泰自願醫保 – 標準計劃 | HK$6,684 |\n\n在 33 個有提供 60 歲保費的標準計劃中，市場中位數為 HK$7,887，最高為 HK$17,973。以上為保險公司公布的標準保費，未計核保附加費或折扣。\n\n如需選購，請向保險公司或持牌保險中介人確認。"
+    },
+    {
+      "id": "d03",
+      "kind": "data",
+      "lang": "en",
+      "question": "What is the most expensive Standard Plan premium for a 30-year-old male non-smoker?",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "4104"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "find_premiums"
+      ],
+      "retries": 0,
+      "ms": 2819,
+      "answer": "The most expensive Standard Plan premium for a 30-year-old male non-smoker is **HK$4,104 a year** — MSIG Insurance (Hong Kong) Limited, \"VHIS Standard Care\" (S00029-01-000-02).\n\nAcross the 33 Standard Plans priced at this age, the market range is HK$1,485 (lowest) to HK$4,104 (highest), median HK$2,274.\n\n| Insurer | Plan | Annual premium |\n|---|---|---|\n| MSIG | VHIS Standard Care | HK$4,104 |\n| Chubb Life | Chubb VHIS – Standard Plan | HK$3,523 |\n| Blue Cross | CareForYou Standard Plan for VHIS | HK$3,469 |\n| Dah Sing | ADVANTAGE VHIS Standard Plan | HK$3,208 |\n| Cigna | VHIS Series – Standard Plan | HK$3,089 |\n\nThese are insurers' published standard premiums before underwriting loadings or discounts. Please confirm details with the insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "d04",
+      "kind": "data",
+      "lang": "en",
+      "question": "What is the median annual premium across Standard Plans for a 65-year-old female non-smoker?",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "10057"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "find_premiums"
+      ],
+      "retries": 0,
+      "ms": 2285,
+      "answer": "The median annual premium across Standard Plans for a 65-year-old female non-smoker is **HK$10,057** (33 plans priced at this age).\n\n| Market figure | Annual premium |\n|---|---|\n| Lowest | HK$6,775 |\n| 25th percentile | HK$8,728 |\n| Median | HK$10,057 |\n| 75th percentile | HK$11,719 |\n| Highest | HK$22,250 |\n\nThese are insurers' published standard premiums before underwriting loadings or discounts. Confirm details with the insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "d05",
+      "kind": "data",
+      "lang": "en",
+      "question": "For a male non-smoker, which Flexi Plan has the lowest total premiums from age 40 to 80, and what is the total?",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "354637"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "lifetime_cost"
+      ],
+      "retries": 0,
+      "ms": 2842,
+      "answer": "**Lowest total (male non-smoker, ages 40–80, Flexi Plans, HKD):** FWD Life — vPrime Signature Medical Plan (尊衛您（寰譽版）醫療計劃), Standard (HK$250,000 deductible), certification no. F00070-06-000-02 — **HK$354,637**.\n\n| Rank | Plan | Insurer | Total (40–80) |\n|---|---|---|---|\n| 1 | vPrime Signature Medical Plan (HK$250,000 deductible) | FWD | HK$354,637 |\n| 2 | Chubb VHIS – Superb Plan (HK$100,000 deductible) | Chubb Life | HK$370,229 |\n| 3 | vBooster Medical Plan (HK$180,000 deductible) | FWD | HK$378,661 |\n\nMarket across 424 matching Flexi Plans: lowest HK$354,637, median HK$1,213,190, highest HK$7,097,272. Note the top plan's premium table stops at age 81, and these are published standard premiums before underwriting loadings or discounts.\n\nPlease confirm details with the insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "d06",
+      "kind": "data",
+      "lang": "zh",
+      "question": "不吸煙男士由40歲供到99歲，最平嘅標準計劃總保費係幾多？",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "509340"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "lifetime_cost"
+      ],
+      "retries": 0,
+      "ms": 3356,
+      "answer": "不吸煙男士由 40 歲供到 99 歲，最平的標準計劃是眾安人壽 ZA 自願醫保，總保費 HK$509,340（認證編號 S00045-01-000-01）。\n\n| 排名 | 計劃 | 總保費 |\n|---|---|---|\n| 1 | 眾安人壽 ZA 自願醫保 | HK$509,340 |\n| 2 | 保泰人壽 保泰自願醫保 – 標準計劃 | HK$557,892 |\n| 3 | 萬通保險 「稅」優惠醫療計劃 | HK$603,448 |\n| 4 | 中國人壽（海外）衛您健康醫療保險計劃 | HK$622,698 |\n| 5 | 安盛 AXA安盛守慧醫療保障 | HK$637,068 |\n\n市場中位數為 HK$771,292，最高為 HK$1,254,211（共 33 個符合篩選的標準計劃，其中 30 個在 40–99 歲每年均有保費）。\n\n以上為保險公司公布的標準保費，未計核保加費或折扣。投保前請向保險公司或持牌保險中介人確認。"
+    },
+    {
+      "id": "d07",
+      "kind": "data",
+      "lang": "en",
+      "question": "How many Standard Plans have a published premium for a 50-year-old female non-smoker?",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "33"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "find_premiums"
+      ],
+      "retries": 0,
+      "ms": 2841,
+      "answer": "**33 Standard Plans** have a published annual premium for a 50-year-old female non-smoker (HKD).\n\nMarket range at that age: lowest HK$3,860, median HK$5,678, highest HK$8,488.\n\nCheapest few:\n| Plan | Insurer | Annual premium |\n|---|---|---|\n| ZA VHIS | ZA Life | HK$3,860 |\n| Bowtie VHIS Standard | Bowtie Life | HK$4,212 |\n| Liberty Insurance Standard VHIS Plan | Liberty International | HK$4,291 |\n\nThese are insurers' published standard premiums before underwriting loadings or discounts; confirm details with the insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "d08",
+      "kind": "data",
+      "lang": "zh",
+      "question": "有幾多個港元計劃嘅保費表去到100歲或以上？",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "168"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "plans_covering_age"
+      ],
+      "retries": 0,
+      "ms": 2399,
+      "answer": "港元計劃中，保費表去到100歲或以上的有 **168 個**（在 472 個符合篩選條件的計劃中）。\n\n部分例子：\n- 保誠「靈活自主醫保計劃」多個級別：最高至 121 歲\n- 富衛「更衛您醫療計劃」：最高至 100 歲\n- 宏利「全護航自願醫保靈活計劃」：最高至 121 歲\n\n以上數字按各計劃公布保費表的最高年齡計算。"
+    },
+    {
+      "id": "d09",
+      "kind": "data",
+      "lang": "en",
+      "question": "What is the annual premium of the ZA VHIS Standard Plan for a 70-year-old man who doesn't smoke?",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "8960"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "find_premiums",
+        "plan_details"
+      ],
+      "retries": 0,
+      "ms": 2733,
+      "answer": "The ZA VHIS Standard Plan (certification no. S00045-01-000-01, ZA Life Limited) costs **HK$8,960** per year for a 70-year-old non-smoking man.\n\n- Plan type: Standard Plan; premium table runs to age 99\n- This is the insurer's published standard premium, before underwriting loadings or discounts\n\nConfirm details with the insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "d10",
+      "kind": "data",
+      "lang": "en",
+      "question": "What is AIA's cheapest Flexi Plan premium for a 35-year-old female non-smoker?",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "3688"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "find_premiums"
+      ],
+      "retries": 0,
+      "ms": 2372,
+      "answer": "AIA's cheapest Flexi Plan for a 35-year-old female non-smoker is **HK$3,688** a year:\n\n| Plan | Level | Annual premium |\n|---|---|---|\n| AIA Voluntary Health Insurance SelectWise Scheme (F00081-05-000-01) | HKD55,000 Deductible | HK$3,688 |\n| AIA Voluntary Health Insurance SelectWise Scheme (F00081-04-000-01) | HKD30,000 Deductible | HK$5,024 |\n| AIA Voluntary Health Insurance SelectWise Scheme (F00081-03-000-01) | HKD18,000 Deductible | HK$5,528 |\n\nThese are the insurers' published standard premiums before underwriting loadings or discounts. Please confirm details with the insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "d11",
+      "kind": "data",
+      "lang": "zh",
+      "question": "保誠嘅標準計劃，50歲女士唔吸煙，每年保費幾多？",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "6897"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "find_premiums"
+      ],
+      "retries": 0,
+      "ms": 2875,
+      "answer": "保誠（Prudential Hong Kong Limited）的標準計劃「保誠自主醫保計劃」（PRUHealth CoreChoice Medical Plan，認證編號 S00026-01-000-02），50歲不吸煙女性每年保費為 **HK$6,897**。\n\n- 計劃級別：標準計劃\n- 保費表最高定價年齡：100歲\n- 此為保險公司公布的標準保費，未計核保加費或折扣\n\n如需選購，請向保險公司或持牌保險中介人確認。"
+    },
+    {
+      "id": "d12",
+      "kind": "data",
+      "lang": "en",
+      "question": "What is the cheapest US dollar Flexi Plan for a 40-year-old male non-smoker?",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "498"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "find_premiums"
+      ],
+      "retries": 0,
+      "ms": 2976,
+      "answer": "The cheapest USD Flexi Plan for a 40-year-old male non-smoker is **AIA Voluntary Health Insurance SelectWise Scheme** (USD6,875 Deductible) at **US$498** a year.\n\n| Rank | Plan | Insurer | Level | Annual premium |\n|---|---|---|---|---|\n| 1 | AIA SelectWise Scheme (F00081-10-000-01) | AIA | USD6,875 Deductible | US$498 |\n| 2 | AXA WiseGuard Pro (F00034-12-000-05) | AXA | Regular (USD6,250 Deductible) | US$571 |\n| 3 | PRUHealth VHIS VIP Plan (F00050-08-000-01) | Prudential | USD12,000 Deductible (Asia) | US$580 |\n\nMarket context at this age (73 USD Flexi Plans priced): lowest US$498, median US$1,244, highest US$3,507. Premiums are insurers' published standard premiums before underwriting loadings or discounts.\n\nPlease confirm details with the insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "d13",
+      "kind": "data",
+      "lang": "en",
+      "question": "Compare the total premiums from age 40 to 60 for a male non-smoker between ZA VHIS and Bowtie's Standard Plan.",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "71745",
+          "77124"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "plan_details",
+        "plan_details",
+        "compare_plans"
+      ],
+      "retries": 0,
+      "ms": 3939,
+      "answer": "**Total premiums, male non-smoker, age 40–60 (21 years), HKD:**\n\n| Plan | Cert. no. | Premium at 40 | Premium at 60 | Total 40–60 |\n|---|---|---|---|---|\n| ZA VHIS (Standard Plan) | S00045-01-000-01 | HK$2,075 | HK$5,315 | HK$71,745 |\n| Bowtie VHIS Standard | S00023-01-000-03 | HK$2,304 | HK$5,568 | HK$77,124 |\n\n- Difference: HK$5,379 more for Bowtie over the period.\n- Both are Standard Plans with published premium tables reaching age 99.\n\nThese are insurers' published standard premiums before underwriting loadings or discounts. Please confirm details with the insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "d14",
+      "kind": "data",
+      "lang": "zh",
+      "question": "50歲吸煙女士，最平嘅標準計劃係邊個？保費幾多？",
+      "pass": true,
+      "detail": {
+        "expected": [
+          "3860"
+        ],
+        "missing": [],
+        "used_expected_tool": true
+      },
+      "tools": [
+        "find_premiums"
+      ],
+      "retries": 0,
+      "ms": 2881,
+      "answer": "50歲吸煙女士，最平的標準計劃是 **眾安人壽 ZA 自願醫保（ZA VHIS）**，年保費 **HK$3,860**（認證編號 S00045-01-000-01）。\n\n| 排名 | 計劃 | 保險公司 | 年保費 |\n|---|---|---|---|\n| 1 | ZA 自願醫保 | 眾安人壽 | HK$3,860 |\n| 2 | 利寶國際自願醫保標準計劃 | 利寶國際 | HK$4,291 |\n| 3 | 永明港健康醫療保 | 香港永明金融 | HK$4,307 |\n\n市場參考（33個標準計劃）：最低 HK$3,860、中位數 HK$5,782、最高 HK$9,273。\n\n以上為保險公司公布的標準保費，未計核保加費或折扣。購買前請向保險公司或持牌保險中介人確認。"
+    },
+    {
+      "id": "r01",
+      "kind": "docs",
+      "lang": "en",
+      "question": "How much VHIS premium can I claim as a tax deduction per insured person?",
+      "pass": true,
+      "detail": {
+        "phrasesOk": true,
+        "citedRelevant": true,
+        "recall_at_5_raw_question": true
+      },
+      "tools": [
+        "search_documents",
+        "search_documents"
+      ],
+      "retries": 0,
+      "ms": 7677,
+      "answer": "**HK$8,000 per insured person per year of assessment** — the deductible amount is capped at that level, so any premium above HK$8,000 for a person is not deductible [c0041][c0382].\n\n- There is no limit on the number of policies you can claim for [c0042].\n- The insured person must be you or a \"specified relative\" (spouse, children, and your or your spouse's grandparents, parents and siblings) and a Hong Kong resident [c0382][c0038].\n- Example: premium of HK$12,000 → deductible HK$8,000 [c0041].\n\nFor your own situation, confirm with the Inland Revenue Department or a licensed insurance intermediary."
+    },
+    {
+      "id": "r02",
+      "kind": "docs",
+      "lang": "zh",
+      "question": "自願醫保保費扣稅上限係幾多？",
+      "pass": true,
+      "detail": {
+        "phrasesOk": true,
+        "citedRelevant": true,
+        "recall_at_5_raw_question": true
+      },
+      "tools": [
+        "search_documents"
+      ],
+      "retries": 0,
+      "ms": 8218,
+      "answer": "每個課稅年度，每名受保人的保費扣除上限為 **HK$8,000** [c0097][c0385]。\n\n- 可申請扣除的保單數目沒有上限；每名受保人各自計算 HK$8,000 上限 [c0098]。\n- 實際節省稅款視乎你的稅率，例如稅率 17% 時，扣除 HK$8,000 可節省 HK$1,360 [c0097]。\n- 受保人須為你本人或指明親屬（配偶、子女、父母、祖父母、兄弟姐妹等），並須為香港居民 [c0094][c0385]。\n\n以上為一般資料，實際申索請以稅務局及保單條款為準；如有疑問，可向保險公司或持牌保險中介人確認。"
+    },
+    {
+      "id": "r03",
+      "kind": "docs",
+      "lang": "en",
+      "question": "How are unknown pre-existing conditions covered under a Certified Plan?",
+      "pass": true,
+      "detail": {
+        "phrasesOk": true,
+        "citedRelevant": true,
+        "recall_at_5_raw_question": true
+      },
+      "tools": [
+        "search_documents",
+        "search_documents"
+      ],
+      "retries": 0,
+      "ms": 8859,
+      "answer": "**Unknown pre-existing conditions** are health conditions that already existed but that you were unaware of when you applied [c0016]. All Certified Plans must cover them on a phased basis:\n\n| Policy year | Reimbursement of eligible expenses |\n|---|---|\n| 1st | No coverage |\n| 2nd | 25% of benefit limit |\n| 3rd | 50% of benefit limit |\n| 4th year onwards | 100% (full) |\n\nSources: FAQ Q17 [c0016] (Chinese: [c0072]); Standard Plan policy template [c0322], [c0323].\n\nTwo related points from the template:\n- If you were unaware, and reasonably should not have been aware, of the condition, the insurer has no right to re-underwrite or terminate the policy on that ground [c0323].\n- By contrast, non-disclosure of a condition you knew of (or should have known of) can entitle the insurer to void the policy and recover claims paid [c0323].\n\nFor anything specific to your own situation, confirm with the insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "r04",
+      "kind": "docs",
+      "lang": "en",
+      "question": "Up to what age is renewal guaranteed for VHIS Certified Plans?",
+      "pass": true,
+      "detail": {
+        "phrasesOk": true,
+        "citedRelevant": true,
+        "recall_at_5_raw_question": true
+      },
+      "tools": [
+        "search_documents",
+        "search_documents"
+      ],
+      "retries": 0,
+      "ms": 6971,
+      "answer": "**Renewal is guaranteed up to age 100** for VHIS Certified Plans.\n\n- All Certified Plans must offer guaranteed renewal up to age 100, regardless of any change in your health after the policy is in force [c0007][c0063].\n- The Standard Plan policy template states renewal is guaranteed up to the age of 100 years of the insured person [c0160][c0303].\n- The only exception is where important information (e.g. pre-existing conditions) was not provided accurately and completely at application [c0032].\n\nNote: some Flexi Plans may carry a lifetime benefit limit, but guaranteed renewal to 100 still applies [c0008][c0064]."
+    },
+    {
+      "id": "r05",
+      "kind": "docs",
+      "lang": "en",
+      "question": "What is the annual benefit limit of the Standard Plan?",
+      "pass": true,
+      "detail": {
+        "phrasesOk": true,
+        "citedRelevant": true,
+        "recall_at_5_raw_question": true
+      },
+      "tools": [
+        "search_documents"
+      ],
+      "retries": 0,
+      "ms": 7599,
+      "answer": "The Standard Plan's Annual Benefit Limit is **HK$420,000 per Policy Year**, covering benefit items (a)–(l) [c0233]. There is no lifetime benefit limit for these items [c0233].\n\n- The limit is the maximum the insurer pays in a Policy Year, regardless of whether individual item limits have been reached, and it resets each new Policy Year [c0203].\n- Key item limits within it: room and board HK$750/day (max 180 days), miscellaneous charges HK$14,000 per Policy Year, surgeon's fee HK$5,000–HK$50,000 per surgery by category [c0232]; prescribed non-surgical cancer treatments HK$80,000 and psychiatric treatments HK$30,000 per Policy Year [c0233].\n\nThis is general information only; confirm details with the insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "r06",
+      "kind": "docs",
+      "lang": "zh",
+      "question": "標準計劃每年保障限額係幾多？",
+      "pass": true,
+      "detail": {
+        "phrasesOk": true,
+        "citedRelevant": true,
+        "recall_at_5_raw_question": true
+      },
+      "tools": [
+        "search_documents"
+      ],
+      "retries": 0,
+      "ms": 9394,
+      "answer": "標準計劃的每年保障限額為**每保單年度 HK$420,000**（保障項目 (a)–(l) 合計），並且**不設終身保障限額** [c0350]。\n\n各項目的個別限額（部分）[c0349][c0350]：\n\n| 保障項目 | 限額 |\n|---|---|\n| 病房及膳食 | 每日 HK$750（每年最多180日） |\n| 雜項開支 | 每年 HK$14,000 |\n| 主診醫生巡房費 | 每日 HK$750（每年最多180日） |\n| 專科醫生費 | 每年 HK$4,300 |\n| 深切治療 | 每日 HK$3,500（每年最多25日） |\n| 外科醫生費 | 每項手術 HK$5,000–HK$50,000（按手術分類） |\n| 訂明診斷成像檢測 | 每年 HK$20,000（設30%共同保險） |\n| 訂明非手術癌症治療 | 每年 HK$80,000 |\n| 精神科治療 | 每年 HK$30,000 |\n\n每年保障限額於每個新保單年度重新計算 [c0330]。以上為標準計劃保單範本所列的最低要求，個別認可產品的條款請向保險公司或持牌保險中介人確認。"
+    },
+    {
+      "id": "r07",
+      "kind": "docs",
+      "lang": "en",
+      "question": "Can I cancel my Certified Plan after buying it and get my money back?",
+      "pass": true,
+      "detail": {
+        "phrasesOk": true,
+        "citedRelevant": true,
+        "recall_at_5_raw_question": true
+      },
+      "tools": [
+        "search_documents",
+        "search_documents"
+      ],
+      "retries": 0,
+      "ms": 8015,
+      "answer": "**Yes — you can cancel during the cooling-off period and get a full premium refund, provided no claim has been made.**\n\n- You have the right to cancel with a full premium refund during the cooling-off period, which is at least 21 days, if no claim has been made [c0037][c0093].\n- The cooling-off period runs from the day the policy terms and policy schedule (or the cooling-off notice, whichever is earlier) are delivered to you; the request must be received directly by the insurer within that period [c0134][c0285].\n- To exercise it, you must return the original policy terms and policy schedule, with a signed cancellation letter (or in another form the insurer accepts) [c0136][c0285]. The policy is then treated as void from the policy effective date and the premium is fully refunded [c0136][c0285].\n- This cancellation right does not apply to renewals [c0285].\n\n**After the cooling-off period:** you can still cancel by giving prior written notice (a period of not more than 30 days, as specified in your policy), provided no benefit has been paid under the policy during the relevant policy year [c0136][c0287]. Note that a full refund is not stated for this route — refunds on termination are only pro-rata in the specific circumstances described in the template [c0147][c0294].\n\nPlease confirm the exact cooling-off period and notice requirements with your insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "r08",
+      "kind": "docs",
+      "lang": "en",
+      "question": "Can the insurer increase my premium when I renew?",
+      "pass": true,
+      "detail": {
+        "phrasesOk": true,
+        "citedRelevant": true,
+        "recall_at_5_raw_question": true
+      },
+      "tools": [
+        "search_documents",
+        "search_documents"
+      ],
+      "retries": 0,
+      "ms": 8947,
+      "answer": "**Yes — but only in a way that applies equally to everyone in your age-gender group.**\n\n- The insurer may adjust the standard premium at renewal according to its prevailing standard premium table, applied to all policies of the same class [c0304].\n- The rate of adjustment in your case must equally apply to other customers in the same age-gender group of your plan, which prevents unfair treatment of an individual [c0025][c0081].\n- It may **not** increase your premium loading or add case-based exclusions because of changes in your health conditions, during a policy year or at renewal [c0164][c0305].\n- You must receive written notice of the renewal premium (and any revised terms) at least the notice period before the renewal date — the template requires not less than 30 days [c0306].\n\nNote: these passages are from the Standard Plan policy template and FAQs; Flexi Plan terms may differ in detail. Confirm with your insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "r09",
+      "kind": "docs",
+      "lang": "zh",
+      "question": "我已經有份住院保險，點樣轉去認可產品？",
+      "pass": true,
+      "detail": {
+        "phrasesOk": true,
+        "citedRelevant": true,
+        "recall_at_5_raw_question": true
+      },
+      "tools": [
+        "search_documents",
+        "search_documents"
+      ],
+      "retries": 0,
+      "ms": 8865,
+      "answer": "如果你現有的保險公司已參與自願醫保計劃，你可獲一次機會把現有個人償款住院保險轉移至認可產品；時間取決於你現有保單的續保週期或保險公司的安排，宜直接向保險公司或代理／經紀查詢 [c0089][c0090]。\n\n轉移方式有兩種 [c0091]：\n- **直接續保轉移**：下次續保時，保險公司把同一產品加入自願醫保保障特點，續保為認可產品。\n- **轉至另一認可產品**：可能需重新核保並披露最新健康狀況；若被拒或你不接受核保結果，仍可繼續以現有保單受保。\n\n保險公司必須為所有現有個人償款住院保險保單持有人提供轉移安排，並公平對待 [c0092]；轉移安排須在自願醫保 2019 年 4 月 1 日全面推出後十年內提出 [c0090]。\n\n具體轉移手續及是否需重新核保，請向你的保險公司或持牌保險中介人確認。"
+    },
+    {
+      "id": "r10",
+      "kind": "docs",
+      "lang": "en",
+      "question": "Why do some Flexi Plans have a lifetime benefit limit?",
+      "pass": true,
+      "detail": {
+        "phrasesOk": true,
+        "citedRelevant": true,
+        "recall_at_5_raw_question": true
+      },
+      "tools": [
+        "search_documents",
+        "search_documents"
+      ],
+      "retries": 0,
+      "ms": 7442,
+      "answer": "**Because a lifetime limit lets a plan offer high-end benefits at a more affordable premium.** The VHIS FAQ explains that some hospital plans are designed to provide high-end benefits, and such plans adopt a lifetime benefit limit to keep premiums more affordable — catering to consumers who need higher coverage and adding flexibility to VHIS [c0008][c0064].\n\nTo keep this \"regulated\", only Flexi Plans meeting all of these criteria may have a lifetime benefit limit [c0008][c0064]:\n- Annual benefit limit of at least HK$5 million\n- Lifetime benefit limit of at least HK$20 million, or 4× the annual benefit limit, whichever is higher\n- No itemised dollar limit for at least 10 of the 12 standard benefit items\n\nTwo related points:\n- Standard Plans have no lifetime benefit limit — cover continues to age 100 [c0063]; the Standard Plan benefit schedule states the lifetime benefit limit as \"無\" (none) [c0350].\n- As with all Flexi Plans, policyholders can switch to the Standard Plan on renewal without re-underwriting, so even after reaching the lifetime limit they can still be covered under the Standard Plan [c0008][c0064].\n\nThe policy template defines \"Lifetime Benefit Limit\" as the maximum amount paid cumulatively since inception, regardless of whether item limits or the annual limit have been reached [c0211].\n\nFor details of a specific plan's terms, confirm with the insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "r11",
+      "kind": "docs",
+      "lang": "en",
+      "question": "What is the difference between the Standard Plan and Flexi Plans?",
+      "pass": true,
+      "detail": {
+        "phrasesOk": true,
+        "citedRelevant": true,
+        "recall_at_5_raw_question": true
+      },
+      "tools": [
+        "search_documents",
+        "search_documents"
+      ],
+      "retries": 0,
+      "ms": 7178,
+      "answer": "**Standard Plan** sets the minimum VHIS requirements, and its terms and benefits are standardised — so Standard Plans from different insurers are virtually identical, apart from very limited minor allowable variations [c0020]. **Flexi Plans** must provide basic protection equivalent to the Standard Plan, plus flexible top-up protection such as higher benefit amounts and wider coverage, which varies by plan and insurer [c0020][c0006].\n\nKey points:\n- Both types must meet or exceed the VHIS minimum product standard [c0006].\n- Free choice of hospitals and doctors applies to the basic protection of all Certified Plans; only the top-up part of a Flexi Plan may be tied to a hospital/doctor network [c0009].\n- Global cover (except psychiatric treatment, limited to Hong Kong) applies to the Standard Plan and to the Standard-Plan-equivalent basic protection of Flexi Plans; Flexi Plan top-up benefits may apply to selected regions [c0067].\n- A Flexi Plan may not contain terms and benefits worse than the Standard Plan, except for exemptions the Government may approve [c0333].\n\nSince Flexi Plan terms differ between insurers, check the individual policy terms and benefits before deciding; confirm details with the insurer or a licensed insurance intermediary."
+    },
+    {
+      "id": "r12",
+      "kind": "docs",
+      "lang": "zh",
+      "question": "邊啲親屬嘅自願醫保保費可以扣稅？",
+      "pass": true,
+      "detail": {
+        "phrasesOk": true,
+        "citedRelevant": true,
+        "recall_at_5_raw_question": true
+      },
+      "tools": [
+        "search_documents",
+        "search_documents"
+      ],
+      "retries": 0,
+      "ms": 9969,
+      "answer": "可以扣稅的「指明親屬」包括：納稅人的配偶及子女，以及納稅人或其配偶的祖父母、外祖父母、父母和兄弟姐妹 [c0385][c0382]。\n\n- 受保人須為香港居民（包括香港身份證持有人；未持香港身份證的11歲以下人士，若出生或被領養時父母為香港身份證持有人亦包括在內）[c0094]。\n- 保單持有人須為個人入息稅納稅人或其配偶 [c0094][c0095]。\n- 每名受保人每個課稅年度的保費扣除上限為 HK$8,000，可扣稅保單數目沒有上限 [c0097][c0098]。\n\n以上為官方文件所載資料，實際申索請以稅務局及《稅務條例》定義為準；如有疑問，宜向保險公司或持牌保險中介人確認。"
+    },
+    {
+      "id": "b01",
+      "kind": "behaviour",
+      "lang": "en",
+      "question": "What's the cheapest Standard Plan?",
+      "pass": true,
+      "detail": {
+        "asked": true,
+        "quoted_money": false,
+        "tool_calls": 0
+      },
+      "tools": [],
+      "retries": 0,
+      "ms": 751,
+      "answer": "I need a few details to look up premiums: which age, sex, and smoking status?\n\n(Plan type is Standard Plan; currency defaults to HKD.)"
+    },
+    {
+      "id": "b02",
+      "kind": "behaviour",
+      "lang": "zh",
+      "question": "我應該買邊份計劃？",
+      "pass": true,
+      "detail": {
+        "pointsElsewhere": true,
+        "recommends": false,
+        "usedData": false
+      },
+      "tools": [],
+      "retries": 0,
+      "ms": 2373,
+      "answer": "我可以幫你比較，但唔會建議你買邊份。以下係決定前值得睇嘅事實：\n\n- **計劃類型**：標準計劃（Standard Plan）保障範圍由政府範本規定，各公司大致相同；靈活計劃（Flexi Plan）保障較高但保費較貴；附加保障（rider）須附加於主計劃。\n- **保費**：隨年齡上升，長遠總保費差異可以很大。\n- **保障年齡**：不同計劃的保費表最高可達年齡不同。\n\n如果你話我知年齡、性別、有冇吸煙，同埋想睇標準定靈活計劃，我可以列出實際保費同長期總保費比較。\n\n購買前請向保險公司或持牌保險中介人確認條款及保費。"
+    },
+    {
+      "id": "b03",
+      "kind": "behaviour",
+      "lang": "en",
+      "question": "Which stock should I buy this week?",
+      "pass": true,
+      "detail": {
+        "tool_calls": 0
+      },
+      "tools": [],
+      "retries": 0,
+      "ms": 1221,
+      "answer": "I can't help with that — I only cover Hong Kong's Voluntary Health Insurance Scheme (VHIS): plan premiums, plan details, and the official rules on benefits, claims and tax deduction. I don't give investment or stock information.\n\nIf you have a VHIS question — for example premiums for a given age, sex and smoking status, or how the tax deduction works — I'm happy to help."
+    },
+    {
+      "id": "b04",
+      "kind": "behaviour",
+      "lang": "en",
+      "question": "How much is a Standard Plan for me? I'm 52.",
+      "pass": true,
+      "detail": {
+        "asked": true,
+        "quoted_money": false,
+        "tool_calls": 0
+      },
+      "tools": [],
+      "retries": 0,
+      "ms": 669,
+      "answer": "I need two more details to look up premiums: your sex (male or female) and whether you smoke (smoker or non-smoker)."
+    }
+  ]
+}

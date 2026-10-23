@@ -30,6 +30,7 @@
 
 # local tooling / PDF cache
 /.venv/
+/.venv-llama/
 /.cache/
 
 # debug

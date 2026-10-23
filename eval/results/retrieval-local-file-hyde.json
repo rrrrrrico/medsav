@@ -1,0 +1,64 @@
+{
+  "run_at": "2026-10-23T07:34:37.799Z",
+  "store": "local-file",
+  "hyde": true,
+  "cases": 38,
+  "k": 5,
+  "summary": {
+    "keyword": {
+      "recall_at_1": 28.9,
+      "recall_at_5": 52.6,
+      "mrr": 0.364,
+      "median_ms": 0
+    },
+    "vector": {
+      "recall_at_1": 68.4,
+      "recall_at_5": 94.7,
+      "mrr": 0.775,
+      "median_ms": 6080
+    },
+    "hybrid": {
+      "recall_at_1": 42.1,
+      "recall_at_5": 76.3,
+      "mrr": 0.552,
+      "median_ms": 5673
+    }
+  },
+  "misses": {
+    "keyword": [
+      "Will my premium go up when I renew next year?",
+      "Can they charge me more because I got sick last year?",
+      "Will the insurer drop me if I make a lot of claims?",
+      "Can I get treated in Shenzhen and still claim?",
+      "I had an illness I didn't know about before buying. Will it be paid?",
+      "Does the insurer have to accept everyone who applies?",
+      "Can they exclude my existing illness or add an extra charge?",
+      "Does the government control how much these plans cost?",
+      "Do women pay different prices from men?",
+      "Can I claim the deduction for more than one policy?",
+      "我有舊嘅住院保險，可以點樣轉去自願醫保？",
+      "幾多歲之後就唔可以買？",
+      "洗牙補牙包唔包？",
+      "幫阿爸阿媽買可以扣幾多稅？",
+      "買咗之後反悔得唔得？",
+      "保險公司可唔可以唔俾我買？",
+      "之前唔知道自己有病，咁會唔會賠？",
+      "政府有冇管住保費？"
+    ],
+    "vector": [
+      "Will the insurer drop me if I make a lot of claims?",
+      "Can I deduct premiums I pay for my grandparents?"
+    ],
+    "hybrid": [
+      "Will my premium go up when I renew next year?",
+      "Can they charge me more because I got sick last year?",
+      "Will the insurer drop me if I make a lot of claims?",
+      "Can I get treated in Shenzhen and still claim?",
+      "Does the insurer have to accept everyone who applies?",
+      "Does the government control how much these plans cost?",
+      "幾多歲之後就唔可以買？",
+      "幫阿爸阿媽買可以扣幾多稅？",
+      "保險公司可唔可以唔俾我買？"
+    ]
+  }
+}

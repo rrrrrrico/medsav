@@ -3,6 +3,7 @@
  *
  *   npm run eval:retrieval            # vectors from eval/.cache/embeddings.json
  *   npm run eval:retrieval -- db      # vectors from Supabase pgvector
+ *   npm run eval:retrieval -- --hyde  # vector and hybrid queries use HyDE
  */
 import { mkdirSync, writeFileSync } from "fs";
 import path from "path";
@@ -14,6 +15,7 @@ const K = 5;
 const useDb = process.argv.includes("db");
 const weightArg = process.argv.find((a) => a.startsWith("--keyword-weight="));
 const keywordWeight = weightArg ? Number(weightArg.split("=")[1]) : undefined;
+const hyde = process.argv.includes("--hyde");
 const store = useDb ? supabaseStore() : fileStore(path.join(process.cwd(), "eval", ".cache", "embeddings.json"));
 
 const faqNumber = (title: string) => Number(/^Q(\d+)\./.exec(title)?.[1] ?? NaN);
@@ -28,7 +30,7 @@ async function main() {
     misses[mode] = [];
     for (const c of RETRIEVAL_CASES) {
       const started = Date.now();
-      const { passages } = await retrieve(c.q, { k: K, mode, store, keywordWeight });
+      const { passages } = await retrieve(c.q, { k: K, mode, store, keywordWeight, hyde });
       times.push(Date.now() - started);
       const rank = passages.findIndex((p) => c.relevant.includes(faqNumber(p.title)));
       if (rank === 0) hit1++;
@@ -47,8 +49,8 @@ async function main() {
 
   const dir = path.join(process.cwd(), "eval", "results");
   mkdirSync(dir, { recursive: true });
-  writeFileSync(path.join(dir, `retrieval-${store.name}.json`),
-    JSON.stringify({ run_at: new Date().toISOString(), store: store.name, cases: RETRIEVAL_CASES.length, k: K, summary, misses }, null, 2));
+  writeFileSync(path.join(dir, `retrieval-${store.name}${hyde ? "-hyde" : ""}.json`),
+    JSON.stringify({ run_at: new Date().toISOString(), store: store.name, hyde, cases: RETRIEVAL_CASES.length, k: K, summary, misses }, null, 2));
 }
 
 main().catch((e) => {

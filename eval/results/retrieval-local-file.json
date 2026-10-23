@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-10-15T11:18:39.913Z",
+  "run_at": "2026-10-23T07:17:55.990Z",
   "store": "local-file",
   "cases": 38,
   "k": 5,
@@ -12,15 +12,15 @@
     },
     "vector": {
       "recall_at_1": 60.5,
-      "recall_at_5": 89.5,
-      "mrr": 0.717,
-      "median_ms": 467
+      "recall_at_5": 86.8,
+      "mrr": 0.711,
+      "median_ms": 482
     },
     "hybrid": {
       "recall_at_1": 36.8,
       "recall_at_5": 78.9,
       "mrr": 0.528,
-      "median_ms": 465
+      "median_ms": 473
     }
   },
   "misses": {
@@ -46,6 +46,7 @@
     ],
     "vector": [
       "Will the insurer drop me if I make a lot of claims?",
+      "I had an illness I didn't know about before buying. Will it be paid?",
       "Can I deduct premiums I pay for my grandparents?",
       "喺內地睇醫生可唔可以索償？",
       "保險公司可唔可以唔俾我買？"

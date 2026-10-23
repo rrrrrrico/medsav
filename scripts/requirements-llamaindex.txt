@@ -1,0 +1,6 @@
+llama-index-core==0.14.25
+llama-index-embeddings-openai-like==0.4.0
+llama-index-llms-openai-like==0.8.1
+llama-index-postprocessor-dashscope-rerank==0.6.0
+dashscope==2.0.1
+python-dotenv==1.2.4

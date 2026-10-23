@@ -1,0 +1,63 @@
+{
+  "run_at": "2026-10-23T07:24:58+00:00",
+  "store": "llamaindex-in-memory",
+  "embedding_model": "text-embedding-v3",
+  "rerank_model": "qwen3-rerank",
+  "hyde_llm": "deepseek-chat",
+  "candidates": 20,
+  "cases": 38,
+  "k": 5,
+  "summary": {
+    "vector": {
+      "recall_at_1": 60.5,
+      "recall_at_5": 86.8,
+      "mrr": 0.711,
+      "median_ms": 453
+    },
+    "vector_rerank": {
+      "recall_at_1": 55.3,
+      "recall_at_5": 81.6,
+      "mrr": 0.66,
+      "median_ms": 1103
+    },
+    "hyde": {
+      "recall_at_1": 71.1,
+      "recall_at_5": 97.4,
+      "mrr": 0.793,
+      "median_ms": 4048
+    },
+    "hyde_rerank": {
+      "recall_at_1": 55.3,
+      "recall_at_5": 89.5,
+      "mrr": 0.679,
+      "median_ms": 4807
+    }
+  },
+  "misses": {
+    "vector": [
+      "Will the insurer drop me if I make a lot of claims?",
+      "I had an illness I didn't know about before buying. Will it be paid?",
+      "Can I deduct premiums I pay for my grandparents?",
+      "喺內地睇醫生可唔可以索償？",
+      "保險公司可唔可以唔俾我買？"
+    ],
+    "vector_rerank": [
+      "Can they charge me more because I got sick last year?",
+      "Will the insurer drop me if I make a lot of claims?",
+      "Can I get treated in Shenzhen and still claim?",
+      "Can I deduct premiums I pay for my grandparents?",
+      "幫阿爸阿媽買可以扣幾多稅？",
+      "保險公司可唔可以唔俾我買？",
+      "唔使留院做手術都賠唔賠？"
+    ],
+    "hyde": [
+      "Will the insurer drop me if I make a lot of claims?"
+    ],
+    "hyde_rerank": [
+      "Will the insurer drop me if I make a lot of claims?",
+      "Can I deduct premiums I pay for my grandparents?",
+      "幫阿爸阿媽買可以扣幾多稅？",
+      "唔使留院做手術都賠唔賠？"
+    ]
+  }
+}

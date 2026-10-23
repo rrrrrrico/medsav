@@ -15,7 +15,8 @@
     "build-corpus": ".venv-spark/bin/python scripts/build_assistant_corpus.py",
     "embed-corpus": "tsx --env-file=.env.local scripts/embed-corpus.ts",
     "eval:retrieval": "tsx --env-file=.env.local scripts/eval-retrieval.ts",
-    "export-dify": "tsx scripts/export-dify.ts"
+    "export-dify": "tsx scripts/export-dify.ts",
+    "eval:llamaindex": ".venv-llama/bin/python scripts/llamaindex_retrieval.py"
   },
   "dependencies": {
     "@langchain/core": "^1.2.17",

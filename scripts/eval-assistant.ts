@@ -4,6 +4,7 @@
  *   npm run eval:assistant              # default provider
  *   npm run eval:assistant -- qwen      # a specific provider
  *   npm run eval:assistant -- dify      # the Dify agent app (DIFY_API_KEY)
+ *   EVAL_TAG=hyde RETRIEVAL_HYDE=1 npm run eval:assistant   # tag the results file for a variant run
  */
 import { mkdirSync, writeFileSync } from "fs";
 import path from "path";
@@ -100,7 +101,7 @@ async function main() {
   if (!only) {
     const dir = path.join(process.cwd(), "eval", "results");
     mkdirSync(dir, { recursive: true });
-    writeFileSync(path.join(dir, `${provider}-${summary.prompt_version}.json`), JSON.stringify({ summary, rows }, null, 2));
+    writeFileSync(path.join(dir, `${provider}-${summary.prompt_version}${process.env.EVAL_TAG ? `-${process.env.EVAL_TAG}` : ""}.json`), JSON.stringify({ summary, rows }, null, 2));
   }
 }
 
